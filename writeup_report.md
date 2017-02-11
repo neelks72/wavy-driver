@@ -74,6 +74,10 @@ I used the raw data provided by Udacity. The training and validation data set wa
 ##### Training strategy
 After several attempts of trying to play with the simulator using my keyboard, I decided to use the training data set provided by Udacity. This data set has several recovery training scenarios. However, the data set has disproportionately large samples with zero steering angle.  By trail and error, I found that this has negative effect on the performance in the simulator. So, I formulated a training strategy that will use all of the non-zero samples and only 15% of the zero training samples. In addition, I would augment only the zero angled training sample by horizontal shifting and flipping to make it non-zero. Further, to add to the training data set, I included a random sample of the left and the right camera images with steering angle adjustment.
 
+Here is a animation of the recovery training performed on the simulator
+
+![Recovery training animation](https://github.com/neelks72/wavy-driver/blob/master/output_8Qfe3v.gif?raw=true)
+
 ##### Training data set formulation 
 
 1. The training data was created from random sample of the raw data. I used 80% of the raw data for training. 
@@ -82,14 +86,25 @@ After several attempts of trying to play with the simulator using my keyboard, I
 
 3.  A random selection of images from the left and right cameras was added to the training data set. The steering angle was compensated by adding or subtracting 0.25 units (line 33 to 38). 
 
-![Steering angle distribution before augmentation](https://github.com/neelks72/wavy-driver/blob/master/Before_Zero_Bias_Correction.png?raw=true)
-
 4. The training samples with zero steering angle was further augmented by shifting it to the right or left by randomly by up to 30 pixels. The steering angles was correspondingly adjusted by +-0.0025 per pixel shifted. This further reduced the number of training samples with zero steering angle. (line 64)
 
 5. The sample was further randomly flipped and brightness altered (line 53 and  56)
 
+Here is a histogram showing the steering angle distribution in the raw training data set
+
+![Steering angle distribution before augmentation](https://github.com/neelks72/wavy-driver/blob/master/Before_Zero_Bias_Correction.png?raw=true)
+
+Here is a histogram showing the steering angle distribution after data augmentation of training data set
+
 ![Steering angle distribution after augumentation](https://raw.githubusercontent.com/neelks72/wavy-driver/master/After_Zero_Bias_Correction.png)
 
+ Here are some sample frames from the training data set and their corresponding steering angles before and after augmentation
+
+![Training data set frames](https://github.com/neelks72/wavy-driver/blob/master/Augmentation.PNG?raw=true)
+
+Here are some sample frames from the training data after it is cropped and resized to 64x64 pixels. 
+
+![enter image description here](https://github.com/neelks72/wavy-driver/blob/master/Frames.PNG?raw=true&sds)
 #####Validation data set formulation 
 The validation data set was created by splitting the raw data such that 80% was used for training and 20% was set aside for cross validation (line 207), This resulted in 1823 samples set aside for validation.
 
